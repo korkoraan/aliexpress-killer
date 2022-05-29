@@ -1,6 +1,6 @@
-import React, {useState} from "react";
-import {FlatList, StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import {offCart, toCart} from "./store/store";
+import React, {useEffect} from "react";
+import {FlatList, Image, RefreshControl, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import { offCart, toCart, fetchData} from "./store/store";
 import {useDispatch, useSelector} from "react-redux";
 
 function HomeScreen ({ navigation }) {
@@ -9,6 +9,7 @@ function HomeScreen ({ navigation }) {
         return state
     })
     const { items_in_shopping_cart } = useSelector(state => state)
+    const { status } = useSelector(state => state)
     const dispatch = useDispatch()
 
     const inCart = (item) => items_in_shopping_cart.find(i => i.id === item.id)
@@ -22,30 +23,31 @@ function HomeScreen ({ navigation }) {
         }
     }
 
-    function testFoo() {
-        console.log('-------------------------------')
-        console.log('AVAILABLE: ')
-        console.log(items_available_list)
-        console.log('-------------------------------')
-        console.log('CART: ')
-        console.log(items_in_shopping_cart)
-        console.log('-------------------------------')
-
+    function onRefresh() {
+        dispatch(fetchData())
     }
 
+    useEffect(() => {
+        dispatch(fetchData())
+    }, [])
+
     return (
-        <View style={[styles.container, {
-            flexDirection: "column"
-        }]}>
-            <View style={styles.items_list}>
+        <View style={styles.container}>
+            <View style={styles.items_list} pointerEvents={status && status.type === 'loading' ? 'none' : 'auto'}>
                 <FlatList
                     data={items_available_list}
-                    renderItem={({ item }) => ( //почему item в таких скобках?
+                    renderItem={({ item }) => (
                         <TouchableOpacity style={styles.item} onPress={() => itemPressHandler(item)}>
                             <Text>{item.name}</Text>
                             <Text style={styles.check_in_cart}>{inCart(item) ? 'V' : ''}</Text>
                         </TouchableOpacity>
-                    )}>
+                    )}
+                    refreshControl={
+                    <RefreshControl
+                        refreshing={ status && status.type === 'loading' }
+                        onRefresh={onRefresh}>
+                    </RefreshControl>
+                    }>
                 </FlatList>
             </View>
 
@@ -55,8 +57,9 @@ function HomeScreen ({ navigation }) {
                     title={'btn_shopping_cart'}
                     onPress={() =>
                         navigation.navigate('Shopping Cart')
-                    }
-                />
+                    }>
+                    <Image style={styles.lower_menu_icon} source={require('../res/cart.png')} />
+                </TouchableOpacity>
 
             </View>
         </View>
@@ -66,6 +69,7 @@ function HomeScreen ({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        flexDirection: "column"
     },
     items_list: {
         flex: 1,
@@ -113,7 +117,14 @@ const styles = StyleSheet.create({
         borderRadius:10,
         marginHorizontal:10,
         marginTop:3
-    }
+    },
+    lower_menu_icon: {
+        flex: 1,
+        width: null,
+        height: null,
+        resizeMode: 'contain'
+    },
+
 });
 
 export default HomeScreen
