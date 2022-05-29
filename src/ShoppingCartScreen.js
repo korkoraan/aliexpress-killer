@@ -1,5 +1,5 @@
 import React from 'react';
-import {FlatList, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {FlatList, Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {useDispatch, useSelector} from "react-redux";
 import {offCart, toCart} from "./store/store";
 
@@ -38,8 +38,10 @@ function ShoppingCartScreen({ navigation }) {
                     title={'btn_shopping_cart'}
                     onPress={() =>
                         navigation.navigate('Shopping Cart')
-                    }
-                />
+                    }>
+                    <Image style={styles.lower_menu_icon} source={require('../res/cart.png')} />
+                </TouchableOpacity>
+
             </View>
         </View>
     );
@@ -82,6 +84,12 @@ const styles = StyleSheet.create({
         borderRadius:10,
         marginHorizontal:10,
         marginTop:3
+    },
+    lower_menu_icon: {
+        flex: 1,
+        width: null,
+        height: null,
+        resizeMode: 'contain'
     },
 })
 
