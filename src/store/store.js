@@ -6,17 +6,10 @@ const getItems = () => {
     return fetch('https://my-json-server.typicode.com/korkoraan/aliexpress-killer/items')
         .then((response) => response.json())
         .then(json => {
-            console.log(`json`)
-            console.log(json)
             return [...json]
         })
-        .then((res) => {
-            console.log('WE DONE HERE')
-            console.log(res)
-            return res
-        })
         .catch(error => {
-            console.log('error')
+            console.log('!!!ERROR!!!')
             console.log(error)
         })
 }
@@ -63,7 +56,6 @@ const itemsSlice = createSlice({
         refreshItems: (state) => {
             getItems()
                 .then(data => {
-                    print('refresh yeah!')
                     state.items_available_list = [...data]
                 })
                 .catch(err => print(err))

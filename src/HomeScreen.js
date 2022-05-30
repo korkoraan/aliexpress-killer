@@ -38,7 +38,7 @@ function HomeScreen ({ navigation }) {
                     data={items_available_list}
                     renderItem={({ item }) => (
                         <TouchableOpacity style={styles.item} onPress={() => itemPressHandler(item)}>
-                            <Text>{item.name}</Text>
+                            <Text style={{marginStart: 50, marginTop: 23, color: 'black'}}>{item.name}</Text>
                             <Text style={styles.check_in_cart}>{inCart(item) ? 'V' : ''}</Text>
                         </TouchableOpacity>
                     )}
@@ -60,7 +60,6 @@ function HomeScreen ({ navigation }) {
                     }>
                     <Image style={styles.lower_menu_icon} source={require('../res/cart.png')} />
                 </TouchableOpacity>
-
             </View>
         </View>
     );
@@ -78,13 +77,15 @@ const styles = StyleSheet.create({
     },
     check_in_cart: {
         textAlign: 'right',
-        marginEnd: 100,
+        marginTop: 18,
+        marginStart: 150,
         color: 'green',
         fontSize: 20,
         fontWeight: '900'
     },
     item: {
         flex:1,
+        flexDirection: 'row',
         marginTop: 10,
         borderWidth:1,
         borderColor:'black',
