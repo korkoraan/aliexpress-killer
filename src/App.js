@@ -12,7 +12,8 @@ function App() {
     return (
         <Provider store={store}>
             <NavigationContainer>
-                <Stack.Navigator initialRouteName="Home">
+                <Stack.Navigator initialRouteName="Home"
+                screenOptions={{headerShown: false}}>
                     <Stack.Screen name="Home" component={HomeScreen} />
                     <Stack.Screen name="Shopping Cart" component={ShoppingCartScreen} />
                 </Stack.Navigator>
