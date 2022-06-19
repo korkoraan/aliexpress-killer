@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, View} from "react-native";
 import {useDispatch, useSelector} from "react-redux";
-import {offCart, toCart} from "./store/store";
+import {offCart, toCart} from "./data/store";
 import LowerMenu from "./components/LowerMenu";
 import ItemsList from "./components/ItemsList";
 

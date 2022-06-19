@@ -2,7 +2,7 @@ import {FlatList, Text, TouchableOpacity, View, StyleSheet, RefreshControl} from
 import React from "react";
 import { useSelector } from "react-redux";
 
-export default function ItemsList({ items, itemPressHandler, onRefresh }) {
+export default function ItemsList({ items, itemPreset, itemPressHandler, onRefresh }) {
 
     const { items_in_shopping_cart } = useSelector(state => state)
     const { status } = useSelector(state => state)

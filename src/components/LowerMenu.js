@@ -1,6 +1,7 @@
 import {StyleSheet, TouchableOpacity, View} from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import React from "react";
+import storage from "../data/asyncStorage";
 
 export default function LowerMenu({ navigation }) {
     return (
@@ -11,7 +12,7 @@ export default function LowerMenu({ navigation }) {
                 onPress={() =>
                     navigation.navigate('Home')
                 }>
-                <Icon name={"home-outline"} size={60} style={{alignSelf: "center"}}></Icon>
+                <Icon name={"home-outline"} size={50} style={{alignSelf: "center"}}></Icon>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -20,7 +21,43 @@ export default function LowerMenu({ navigation }) {
                 onPress={() =>
                     navigation.navigate('Shopping Cart')
                 }>
-                <Icon name={"cart-outline"} size={60} style={{alignSelf: "center"}}></Icon>
+                <Icon name={"cart-outline"} size={50} style={{alignSelf: "center"}}></Icon>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+                style={styles.lower_menu_button}
+                title={'btn_history'}
+                onPress={() =>
+                    navigation.navigate('History')
+                }>
+                <Icon name={"reader-outline"} size={50} style={{alignSelf: "center"}}></Icon>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+                style={styles.lower_menu_button}
+                title={'btn_test'}
+                onPress={() => {
+                    storage.getHistory()
+                        .then((data) => {
+                            console.log(data)
+                        })
+                        .catch(err => console.log(err))
+                }
+                }>
+                <Icon name={"build-outline"} size={50} style={{alignSelf: "center"}}></Icon>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+                style={styles.lower_menu_button}
+                title={'btn_trash'}
+                onPress={ async () => {
+                    await storage.clearHistory()
+                    await storage.getHistory()
+                        .then(data => console.log(data)
+                        )
+                }
+                }>
+                <Icon name={"trash-outline"} size={50} style={{alignSelf: "center"}}></Icon>
             </TouchableOpacity>
         </View>
     )
@@ -37,8 +74,8 @@ const styles = StyleSheet.create({
     lower_menu_button: {
         borderColor:'grey',
         backgroundColor:'white',
-        width:65,
-        height:65,
+        width:55,
+        height:55,
         borderRadius:10,
         marginHorizontal:10,
         marginTop:3
